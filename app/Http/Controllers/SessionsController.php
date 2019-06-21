@@ -28,4 +28,11 @@ class SessionsController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    // 用户退出功能
+    public function destroy() {
+        // Laravel 默认提供的 Auth::logout() 方法来实现用户的退出功能
+        Auth::logout();
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
+    }
 }
