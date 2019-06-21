@@ -16,4 +16,14 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    // 处理表单数据提交后的 store 方法，用于处理用户创建的相关逻辑
+    public function store(Request $request) {
+        // validate 方法来进行数据验证 第一个参数为用户的输入数据，第二个参数为该输入数据的验证规则
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        return;
+    }
 }
