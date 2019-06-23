@@ -12,13 +12,21 @@ class UsersController extends Controller
     public function __construct() {
         // 中间件(middleware)
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'update']
+            'except' => ['show', 'create', 'update', 'index']
         ]);
         // 只让未登录用户访问注册页面
         $this->middleware('guest', [
             'only' => ['create']
         ]);
     }
+
+    // 用户列表
+    public function index() {
+        // 列出所有用户
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
+    }
+
     // 注册
     public function create() {
         return view('users.create');
