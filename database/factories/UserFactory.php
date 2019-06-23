@@ -28,5 +28,6 @@ $factory->define(User::class, function () {
         'remember_token' => Str::random(10),
         'created_at' => $date_time,
         'updated_at' => $date_time,
+        'activated' => true, // 将生成的假用户都设为已激活状态
     ];
 });

@@ -25,11 +25,18 @@ class SessionsController extends Controller
         ]);
         // attempt 方法会接收一个数组来作为第一个参数，该参数提供的值将用于寻找数据库中的用户数据 :bool
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            // 登录成功后的相关操作
-            session()->flash('success', '欢迎回来！');
-            $fallback = route('users.show', [Auth::user()]);
-            // 友好的转向 intended 方法，该方法可将页面重定向到上一次请求尝试访问的页面上
-            return redirect()->intended($fallback);
+            // 登录成功后的相关操作 登录时检查是否已激活
+            if (Auth::user()->activated) {
+                session()->flash('success', '欢迎回来！');
+                $fallback = route('users.show', [Auth::user()]);
+                // 友好的转向 intended 方法，该方法可将页面重定向到上一次请求尝试访问的页面上
+                return redirect()->intended($fallback);
+            } else {
+                // 用户没有激活时，则视为认证失败，用户将会被重定向至首页，并显示消息提醒去引导用户查收邮件
+                Auth::logout();
+                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+           }
         } else {
             // 登录失败后的相关操作
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
