@@ -25,4 +25,10 @@ class UserPolicy
         // dump($user->id); // 当前修改的用户ID
         return $currentUser->id === $user->id;
     }
+
+    // 只有当前登录用户为管理员才能执行删除操作并且删除的用户对象不是自己（即使是管理员也不能自己删自己）
+    public function destroy(User $currentUser, User $user) {
+        // 只有当前用户拥有管理员权限且删除的用户不是自己时才显示链接
+        return $currentUser->is_admin && $currentUser->id !== $user->id;
+    }
 }

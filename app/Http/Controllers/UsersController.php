@@ -12,7 +12,7 @@ class UsersController extends Controller
     public function __construct() {
         // 中间件(middleware)
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'update', 'index']
+            'except' => ['show', 'create', 'store', 'index']
         ]);
         // 只让未登录用户访问注册页面
         $this->middleware('guest', [
@@ -83,5 +83,12 @@ class UsersController extends Controller
         $user->update($data);
         session()->flash('success', '个人资料更新成功！');
         return redirect()->route('users.show', $user->id);
+    }
+
+    // 删除用户的动作
+    public function destroy(User $user) {
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
