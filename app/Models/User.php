@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
-
+// 用户模型
 class User extends Authenticatable
 {
     use Notifiable;
@@ -51,9 +51,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // 用户模型中定义一个 gravatar 方法，用来生成用户的头像 (格万特)
+    // 定义一个 gravatar 方法，用来生成用户的头像 (格万特)
     public function gravatar($size = 100) {
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+    // 一个用户拥有多条微博
+    public function statuses() {
+        return $this->hasMany(Status::class);
     }
 }
