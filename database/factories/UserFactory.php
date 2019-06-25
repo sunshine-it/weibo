@@ -14,10 +14,10 @@ use Faker\Factory as Factory;
 | model instances for testing / seeding your application's database.
 |
 */
+// 初始化 Faker\Factory 使用中文
+$faker = Factory::create('zh_CN');
 
-$factory->define(User::class, function () {
-    // 初始化 Faker\Factory 使用中文
-    $faker = Factory::create('zh_CN');
+$factory->define(User::class, function () use ($faker) {
     // 生成随机日期 生成随机时间
     $date_time = $faker->date . ' ' . $faker->time;
     return [
