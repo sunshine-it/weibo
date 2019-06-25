@@ -27,4 +27,13 @@ class StatusesController extends Controller
         session()->flash('success', '发布成功！');
         return redirect()->back();
     }
+
+    // 微博的删除
+    public function destroy(Status $status) {
+        // 做删除授权的检测，不通过会抛出 403 异常
+        $this->authorize('destroy', $status);
+        $status->delete();
+        session()->flash('success', '微博已被成功删除！');
+        return redirect()->back();
+    }
 }

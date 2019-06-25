@@ -14,6 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models' => 'App\Policies\ModelPolicy',
+        // \App\Models\User::class  => \App\Policies\UserPolicy::class,
+        // \App\Models\Status::class  => \App\Policies\StatusPolicy::class,
     ];
 
     /**
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 授权策略自动注册
         $this->registerPolicies();
 
         // 修改策略自动发现的逻辑
