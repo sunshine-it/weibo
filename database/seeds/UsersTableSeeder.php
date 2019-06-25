@@ -18,8 +18,8 @@ class UsersTableSeeder extends Seeder
         $users = factory(User::class)->times(50)->make();
         User::insert($users->makeVisible(['password', 'remember_token'])->toArray());
         $user = User::find(1);
-        $user->name = env('SEEDER_ONE_USER_NAME') ? env('SEEDER_ONE_USER_NAME') : 'Allen';
-        $user->email = env('SEEDER_ONE_USER_EMAIL') ? env('SEEDER_ONE_USER_EMAIL') : 'allen@163.com';
+        $user->name = env('SEEDER_ONE_USER_NAME') ? env('SEEDER_ONE_USER_NAME') : 'Admin';
+        $user->email = env('SEEDER_ONE_USER_EMAIL') ? env('SEEDER_ONE_USER_EMAIL') : 'Admin@weibo.com';
         $user->is_admin = true;
         $user->save();
     }

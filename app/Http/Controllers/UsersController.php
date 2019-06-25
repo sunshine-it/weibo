@@ -39,7 +39,6 @@ class UsersController extends Controller
         $statuses = $user->statuses()
                          ->orderBy('created_at', 'desc')
                          ->paginate(10);
-                         //dump($statuses);
         return view('users.show', compact('user', 'statuses'));
     }
 
@@ -108,8 +107,8 @@ class UsersController extends Controller
         $view = 'emails.confirm';
         $data = compact('user');
         // 已经使用线上 QQ 邮箱
-        //$from = env('SEEDER_ONE_USER_EMAIL') ? env('SEEDER_ONE_USER_EMAIL') : 'allen@163.com';
-        //$name = env('SEEDER_ONE_USER_NAME') ? env('SEEDER_ONE_USER_NAME') : 'Allen';
+        //$from = env('SEEDER_ONE_USER_EMAIL') ? env('SEEDER_ONE_USER_EMAIL') : 'admin@weibo.com';
+        //$name = env('SEEDER_ONE_USER_NAME') ? env('SEEDER_ONE_USER_NAME') : 'admin';
         $to = $user->email;
         $subject = "感谢注册 Weibo 应用！请确认你的邮箱。";
 
