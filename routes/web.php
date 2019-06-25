@@ -47,3 +47,7 @@ Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('pass
 # 微博路由
 // 创建和删除只需要两个动作，因此对 resource 传参 only 键指定只生成 store, destroy 两个动作的路由
 Route::resource('statuses', 'StatusesController', ['only'=> ['store', 'destroy']]);
+// 关注者列表
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+// 粉丝列表
+Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
