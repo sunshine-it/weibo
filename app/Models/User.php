@@ -67,4 +67,37 @@ class User extends Authenticatable
         // 根据创建时间来倒序排序
         return $this->statuses()->orderBy('created_at', 'desc');
     }
+
+    // 获取粉丝关系列表
+    public function followers() {
+        // 多对多关联
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    // 获取用户关注人列表
+    public function followings() {
+        // 多对多关联
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
+    // 定义关注
+    public function follow($user_ids) {
+        if ( ! is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+            $this->followings()->sync($user_ids, false);
+        }
+    }
+
+    // 定义取消关注
+    public function unfollow($user_ids) {
+        if ( ! is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+            $this->followings()->detach($user_ids, false);
+        }
+    }
+
+    // 判断当前登录的用户 A 是否关注了用户 B
+    public function isFollowing($user_id) {
+        return $this->followings->contains($user_id);
+    }
 }
