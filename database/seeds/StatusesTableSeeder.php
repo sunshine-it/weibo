@@ -26,7 +26,7 @@ class StatusesTableSeeder extends Seeder
                     ->each(function ($status) use ($faker, $user_ids) {
                 $status->user_id = $faker->randomElement($user_ids);
         });
-        // dump($statuses->toArray());
+        // dump($statuses->toArray()); // 查看对应存储数据
         Status::insert($statuses->toArray());
     }
 }
